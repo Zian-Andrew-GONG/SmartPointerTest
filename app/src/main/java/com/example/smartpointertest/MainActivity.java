@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         UserOption userOption = new UserOption("id", "name");
         User user = User.create(userOption);
         Log.i("SmartPointerTest", "user id: " + user.getId());
+        user.destroy();
     }
 
     /**
