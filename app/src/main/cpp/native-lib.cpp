@@ -38,7 +38,6 @@ private:
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_example_smartpointertest_User_getId(JNIEnv *env, jobject thiz) {
-    // TODO: implement getId()
     auto clazz = env->GetObjectClass(thiz);
     auto field = env->GetFieldID(clazz, "nativePtr", "J");
     auto ptr = env->GetLongField(thiz, field);
@@ -51,7 +50,6 @@ Java_com_example_smartpointertest_User_getId(JNIEnv *env, jobject thiz) {
 extern "C"
 JNIEXPORT jobject JNICALL
 Java_com_example_smartpointertest_User_create(JNIEnv *env, jclass clazz, jobject user_option) {
-    // TODO: implement create()
     UserOption opts;
     auto user_option_clazz = env->GetObjectClass(user_option);
     auto id_field = env->GetFieldID(user_option_clazz, "id", "Ljava/lang/String;");
@@ -74,7 +72,6 @@ Java_com_example_smartpointertest_User_create(JNIEnv *env, jclass clazz, jobject
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_smartpointertest_User_destroy(JNIEnv *env, jobject thiz) {
-    // TODO: implement destroy()
     auto clazz = env->GetObjectClass(thiz);
     auto field = env->GetFieldID(clazz, "nativePtr", "J");
     auto ptr = env->GetLongField(thiz, field);
