@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.example.smartpointertest.databinding.ActivityMainBinding;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
 
     // Used to load the 'smartpointertest' library on application startup.
@@ -28,10 +30,27 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = binding.sampleText;
         tv.setText(stringFromJNI());
 
-        UserOption userOption = new UserOption("id", "name");
-        User user = User.create(userOption);
-        Log.i("SmartPointerTest", "user id: " + user.getId());
-        user.destroy();
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        while (sb.toString().getBytes().length < 102400) {
+            char c = (char) (random.nextInt(26) + 'a');
+            sb.append(c);
+        }
+        String largeString = sb.toString();
+
+        new Thread(()->{
+            while (true) {
+                UserOption userOption = new UserOption(largeString, largeString);
+                User user = User.create(userOption);
+//                Log.i("SmartPointerTest", "user id: " + user.getId());
+                user.destroy();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
     }
 
     /**
