@@ -2,10 +2,12 @@ package com.example.smartpointertest;
 
 import androidx.annotation.NonNull;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class User {
     private long nativePtr;
 
-    private boolean destroyed;
+    private AtomicBoolean hasDestroyed = new AtomicBoolean(false);
 
     private User(long nativePtr) {
         this.nativePtr = nativePtr;
@@ -16,8 +18,7 @@ public class User {
     private native void nativeDestroy();
 
     public void destroy() {
-        if (!destroyed) {
-            destroyed = true;
+        if (hasDestroyed.compareAndSet(false, true)) {
             this.nativeDestroy();
         }
     }
@@ -27,8 +28,7 @@ public class User {
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        if (!destroyed) {
-            destroyed = true;
+        if (hasDestroyed.compareAndSet(false, true)) {
             this.nativeDestroy();
         }
     }
