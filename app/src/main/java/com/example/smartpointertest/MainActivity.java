@@ -42,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
             while (true) {
                 UserOption userOption = new UserOption(largeString, largeString);
                 User user = User.create(userOption);
-//                Log.i("SmartPointerTest", "user id: " + user.getId());
+                Log.i("SmartPointerTest", "user id: " + user.getId());
                 user.destroy();
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
