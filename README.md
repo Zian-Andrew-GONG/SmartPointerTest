@@ -50,7 +50,7 @@ User.java
 public class User {
     private long nativePtr;
 
-    private AtomicBoolean hasDestroyed = new AtomicBoolean(false);
+    private boolean hasDestroyed = false;
 
     private User(long nativePtr) {
         this.nativePtr = nativePtr;
@@ -61,7 +61,7 @@ public class User {
     private native void nativeDestroy();
 
     public void destroy() {
-        if (hasDestroyed.compareAndSet(false, true)) {
+        if (hasDestroyed == false) {
             this.nativeDestroy();
         }
     }
@@ -71,7 +71,7 @@ public class User {
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        if (hasDestroyed.compareAndSet(false, true)) {
+        if (hasDestroyed == false) {
             this.nativeDestroy();
         }
     }
